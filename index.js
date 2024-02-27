@@ -1,18 +1,32 @@
 require("dotenv").config();
 
+const mongoose = require("mongoose");
 const express = require("express");
-const server = express();
-const port = 3000;
+const port = 3002;
 const userRoute = require("./Router/UserRouter");
 const adminRouter = require("./Router/AdminRouter");
-const momgoose = require("mongoose");
-const { default: mongoose } = require("mongoose");
+const server = express();
+const bodyParser = require("body-parser");
 
-mongoose.connect("mongodb://localhost:27017/backend-ecom");
+// mongoose.connect("mongodb://localhost:27017/backend-ecom");
+const mongodb = "mongodb://127.0.0.1:27017/Backend";
+
+main().catch((err) => {
+  console.log(err);
+});
+
+async function main() {
+  await mongoose.connect(mongodb);
+  console.log("db connected");
+}
+
+server.use(bodyParser.urlencoded({ extended: true }));
+server.use(bodyParser.json());
 
 server.use(express.json());
+
 server.use("/api/users", userRoute);
-server.use("/api/admin", adminRouter);
+server.use("/api/admin", adminRouter)
 
 server.listen(port, (err) => {
   if (err) {

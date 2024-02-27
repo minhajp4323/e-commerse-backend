@@ -1,16 +1,17 @@
 const jwt = require("jsonwebtoken");
 
-module.exports = function verifyAdminToken(req, res, next) {
+module.exports = function verifyToken(req, res, next) {
   const token = req.headers["authorization"];
-  console.log(token);
+
   if (!token) {
-    return res.json({ error: "No token provided" });
+    return res.status(403).send({ error: "No token provided" });
   }
-  jwt.verify(token, process.env.USER_ACCESS_TOKEN, (err, decoded) => {
+
+  jwt.verify(token, process.env.USER_ACCESS_TOKEN, (err, decode) => {
     if (err) {
-      return res.status(401).json({ error: "Unauthorized" });
+      return res.status(401).json({ error: "unauthorization" });
     }
-    req.email = decoded.email;
+    req.username = decode.username;
     next();
   });
 };

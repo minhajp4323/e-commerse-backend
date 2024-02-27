@@ -6,4 +6,4 @@ const joiUserSchema = joi.object({
   phonenumber: joi.number().min(10),
   password: joi.string().min(8).required(),
 });
-module.exports = joiUserSchema;
+module.exports = {joiUserSchema};

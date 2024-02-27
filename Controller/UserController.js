@@ -14,7 +14,7 @@ module.exports = {
     if (error) {
       res.status(400).json({
         status: error,
-        message: `invalid user input, chech the input`,
+        message: `invalid user input, check the input`,
       });
     }
     const userData = await User.create({
@@ -25,22 +25,25 @@ module.exports = {
     });
 
     res.status(200).json({
-      status: success,
+      status: "success",
       message: `Registration succefull`,
       data: userData,
     });
+    console.log(userData);
   },
   userLogin: async (req, res) => {
     const { value, error } = joiUserSchema.validate(req.body);
+
     if (error) {
       res.json(error.message);
     }
     const { email, password } = value;
     const user = await User.findOne({
-      username: username,
+      email: email,
     });
+
     if (!user) {
-      res.status(200).json({
+      res.status(404).json({
         status: "error",
         message: "user not found",
       });
@@ -54,7 +57,7 @@ module.exports = {
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (!passwordMatch) {
       res.status(401).json({
-        status: "error",
+        error: "error",
         message: "Incorrect password",
       });
     }
@@ -63,7 +66,7 @@ module.exports = {
       process.env.USER_ACCESS_TOKEN
     );
     res.status(200).json({
-      status: success,
+      status: "success",
       message: "Logged in",
       Token: token,
     });

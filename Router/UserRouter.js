@@ -5,6 +5,6 @@ const tryCatch = require("./../Middleware/ErrorHanlder");
 const server = express.Router();
 
 server.post("/register", tryCatch(controller.userRegister));
-// server.post("/login", tryCatch, verifyToken(controller.userLogin))
+server.get("/login", tryCatch(controller.userLogin));
 
-module.exports = server;
+module.exports = server; 
