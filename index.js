@@ -5,6 +5,10 @@ const server = express();
 const port = 3000;
 const userRoute = require("./Router/UserRouter");
 const adminRouter = require("./Router/AdminRouter");
+const momgoose = require("mongoose");
+const { default: mongoose } = require("mongoose");
+
+mongoose.connect("mongodb://localhost:27017/backend-ecom");
 
 server.use(express.json());
 server.use("/api/users", userRoute);
