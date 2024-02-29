@@ -37,9 +37,9 @@ module.exports = {
     if (error) {
       res.json(error.message);
     }
-    const { email, password } = value;
+    const { username, password } = value;
     const user = await User.findOne({
-      email: email,
+      username: username,
     });
 
     if (!user) {
