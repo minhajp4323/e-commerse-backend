@@ -1,4 +1,3 @@
-const mongoose = require("mongoose");
 const Users = require("./../Model/userSchema");
 const jwt = require("jsonwebtoken");
 const { joiUserSchema } = require("./../Model/validateSchema");
@@ -27,17 +26,35 @@ module.exports = {
     }
   },
   getAllUser: async (req, res) => {
-    const allUser = Users.find();
+    const allUser = await Users.find();
+    // console.log(allUser);
     if (allUser.length === 0) {
-      res.status(404).send({
+      res.status(404).json({
         status: "error",
         message: "Users not found",
       });
     } else {
-      res.status(200).send({
+      res.status(200).json({
         status: "Success",
         message: "Fetched all the users",
         data: allUser,
+      });
+    }
+  },
+  getUserById: async (req, res) => {
+    const userID = req.params.id;
+    const user = await Users.findById(userID);
+    console.log(user);
+    if (!user) {
+      res.status(404).json({
+        status: "error",
+        message: "User not found",
+      });
+    } else {
+      res.status(200).json({
+        status: "Succes",
+        message: "Fetched user by id",
+        data: user,
       });
     }
   },
