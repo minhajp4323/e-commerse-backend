@@ -11,11 +11,21 @@ module.exports = {
     const { value, error } = joiUserSchema.validate(req.body);
     const { username, email, phonenumber, password } = value;
     const hashedPassword = await bcrypt.hash(password, 10);
+
     if (error) {
       res.status(400).json({
         status: error,
         message: `invalid user input, check the input`,
       });
+    }
+    const existingUser= await User.find({
+      username: username
+    })
+    if (existingUser) {
+      res.status(400).send({
+        status: "error",
+        message: "Username already taken"
+      })
     }
     const userData = await User.create({
       username: username,

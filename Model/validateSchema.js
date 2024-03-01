@@ -7,11 +7,11 @@ const joiUserSchema = joi.object({
   password: joi.string().min(8).required(),
 });
 const joiProductSchema = joi.object({
+  id:joi.string(),
   name: joi.string(),
   category: joi.string(),
-  price: joi.string(),
-  qty: joi.number(),
-  stock: joi.number(),
+  price: joi.number(),
+  
   imageUrl: joi.string(),
 });
 module.exports = { joiUserSchema , joiProductSchema};
