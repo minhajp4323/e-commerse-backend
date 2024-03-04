@@ -4,7 +4,7 @@ const joiUserSchema = joi.object({
   username: joi.string(),
   email: joi.string().email(),
   phonenumber: joi.number().min(10),
-  password: joi.string().min(8).required(),
+  password: joi.string().min(1).required(),
 });
 const joiProductSchema = joi.object({
   id:joi.string(),
