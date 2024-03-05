@@ -10,6 +10,9 @@ server
   .use(verifyToken)
   .get("/allproduct", tryCatch(controller.viewProducts))
   .get("/oneprod/:id", tryCatch(controller.viewOneProduct))
-  .post("/addtocart/:id", tryCatch(controller.addToCart));
+  .post("/addtocart/:id", tryCatch(controller.addToCart))
+  .get("/viewcart/:id", tryCatch(controller.viewCart))
+  .delete("/deletecartprod/:id", tryCatch(controller.deleteCartProduct))
+  .post("/addtowishlist/:id", tryCatch(controller.addToWishlist))
 
 module.exports = server;
