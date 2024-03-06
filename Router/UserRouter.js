@@ -14,5 +14,8 @@ server
   .get("/viewcart/:id", tryCatch(controller.viewCart))
   .delete("/deletecartprod/:id", tryCatch(controller.deleteCartProduct))
   .post("/addtowishlist/:id", tryCatch(controller.addToWishlist))
+  .get("/viewwishlist/:id", tryCatch(controller.viewWishlist))
+  .delete("/deletewishlist/:id", tryCatch(controller.deleteWishlistProd))
+  .post("/:id/payment", tryCatch(controller.payment))
 
 module.exports = server;

@@ -16,7 +16,7 @@ server
   .post("/addproduct", imageUpload, tryCatch(controller.addProduct))
   .get("/allproducts", tryCatch(controller.viewAllProduct))
   .get("/viewOneproduct/:id", tryCatch(controller.viewProductbyId))
-  .put("/editproduct/:id", tryCatch(controller.editProduct))
   .delete("/deleteproduct/:id", tryCatch(controller.deleteProduct))
+  .put("/editproduct/:id", tryCatch(controller.editProduct))
 
 module.exports = server;
