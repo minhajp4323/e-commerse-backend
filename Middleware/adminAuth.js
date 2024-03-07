@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 
 module.exports = function verifyAdminToken(req, res, next) {
   const token = req.headers["authorization"];
-  
+
   if (!token) {
     return res.json({ error: "No token provided" });
   }
@@ -11,6 +11,6 @@ module.exports = function verifyAdminToken(req, res, next) {
       return res.status(401).json({ error: "Unauthorized" });
     }
     req.username = decoded.username;
-    next()
+    next();
   });
 };

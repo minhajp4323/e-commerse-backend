@@ -5,6 +5,8 @@ const { joiUserSchema } = require("./../Model/validateSchema");
 const jwt = require("jsonwebtoken");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const Product = require("./../Model/productSchema");
+const Order = require("./../Model/orderSchema");
+const { alternatives, valid } = require("joi");
 
 let sValue = [];
 
@@ -79,7 +81,11 @@ module.exports = {
     const token = jwt.sign(
       { username: user.username },
       process.env.USER_ACCESS_TOKEN
+      // {
+      //   expiresIn: 86400,
+      // }
     );
+
     res.status(200).json({
       status: "success",
       message: "Logged in",
@@ -280,7 +286,7 @@ module.exports = {
   //payment
   payment: async (req, res) => {
     const userId = req.params.id;
-    const user = User.findOne({ _id: userId }).populate("cart");
+    const user = await User.findOne({ _id: userId }).populate("cart");
 
     if (!user) {
       res.status(404).send({
@@ -296,6 +302,7 @@ module.exports = {
         data: [],
       });
     }
+    console.log(cartProduct, "sdfghj");
     const lineItems = cartProduct.map((item) => {
       return {
         price_data: {
@@ -305,7 +312,7 @@ module.exports = {
           },
           unit_amount: item.price * 100,
         },
-        qty: 1,
+        quantity: 1,
       };
     });
     const session = await stripe.checkout.sessions.create({
@@ -330,5 +337,77 @@ module.exports = {
       message: "Stripe payment session created",
       url: session.url,
     });
+  },
+  success: async (req, res) => {
+    const { userId, user, session } = sValue;
+
+    console.log(user);
+
+    const cartItems = user.cart;
+    console.log(cartItems);
+
+    const orders = await Order.create({
+      userId: userId,
+      products: cartItems.map((item) => new mongoose.Types.ObjectId(item._id)),
+      orderId: session.id,
+      paymentId: `demo ${Date.now()}`,
+      total_Amount: session.amount_total / 100,
+    });
+    if (!orders) {
+      res.status(404).send({
+        status: "Error",
+        message: "Error occured while ordering",
+      });
+    }
+    const orderId = orders._id;
+    const userUpdate = await User.findOneAndUpdate(
+      { _id: userId },
+      { $push: { orders: orderId }, $set: { cart: [] } },
+      { new: true }
+    );
+    console.log(userUpdate);
+    if (userUpdate) {
+      res.status(200).send({
+        status: "Success",
+        message: "Payment successfull",
+      });
+    } else {
+      res.status(500).send({
+        status: "Error",
+        message: "Failed to update user data",
+      });
+    }
+  },
+  orderDetails: async (req, res) => {
+    const userId = req.params.id;
+    const user = await User.findById(userId).populate("orders");
+
+    if (!user) {
+      res.status(404).send({
+        status: "Error",
+        message: "No users found",
+      });
+    }
+
+    const orderProduct = user.orders;
+    console.log(orderProduct, "HHHHHHHHHHHHHH");
+    if (!orderProduct) {
+      res.status(404).send({
+        status: "error",
+        message: "no orders for any product",
+      });
+    }
+
+    const orderWithProduct = await Order.find({
+      _id: { $in: orderProduct }
+    }).populate("Product");
+    if (orderWithProduct) {
+      res.status(200).send({
+        status: "Success",
+        message: "Successfully fetched the order details",
+        data: orderWithProduct,
+      });
+    }
+    console.log(orderWithProduct);
   },
 };

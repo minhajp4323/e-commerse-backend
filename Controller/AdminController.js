@@ -3,6 +3,7 @@ const Products = require("./../Model/productSchema");
 const jwt = require("jsonwebtoken");
 const { joiProductSchema } = require("./../Model/validateSchema");
 const { default: mongoose } = require("mongoose");
+const Order = require("./../Model/orderSchema")
 
 module.exports = {
   login: async (req, res) => {
@@ -169,5 +170,8 @@ module.exports = {
       });
     }
   },
+  viewOrder: async(req,res)=>{
+    
+  }
   
 };

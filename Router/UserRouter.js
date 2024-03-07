@@ -17,5 +17,7 @@ server
   .get("/viewwishlist/:id", tryCatch(controller.viewWishlist))
   .delete("/deletewishlist/:id", tryCatch(controller.deleteWishlistProd))
   .post("/:id/payment", tryCatch(controller.payment))
+  .post("/paymentsucces", tryCatch(controller.success))
+  .get("/:id/orderdetails", tryCatch(controller.orderDetails))
 
 module.exports = server;
