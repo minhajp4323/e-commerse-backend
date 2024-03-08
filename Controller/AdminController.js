@@ -3,7 +3,8 @@ const Products = require("./../Model/productSchema");
 const jwt = require("jsonwebtoken");
 const { joiProductSchema } = require("./../Model/validateSchema");
 const { default: mongoose } = require("mongoose");
-const Order = require("./../Model/orderSchema")
+const Order = require("./../Model/orderSchema");
+const orderSchema = require("./../Model/orderSchema");
 
 module.exports = {
   login: async (req, res) => {
@@ -99,7 +100,7 @@ module.exports = {
       });
     }
   },
-  
+
   viewProductbyId: async (req, res) => {
     const prodId = req.params.id;
     const prod = await Products.findById(prodId);
@@ -170,8 +171,19 @@ module.exports = {
       });
     }
   },
-  viewOrder: async(req,res)=>{
-    
-  }
-  
+  viewOrder: async (req, res) => {
+    const product = await orderSchema.find();
+    if (!product) {
+      res.status(404).send({
+        status: "Error",
+        message: "No order found",
+      });
+    } else {
+      res.status(200).send({
+        status: "Success",
+        message: "Successfully fetched the Orders",
+        data: product,
+      });
+    }
+  },
 };

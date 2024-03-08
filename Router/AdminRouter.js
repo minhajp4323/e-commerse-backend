@@ -18,5 +18,6 @@ server
   .get("/viewOneproduct/:id", tryCatch(controller.viewProductbyId))
   .delete("/deleteproduct/:id", tryCatch(controller.deleteProduct))
   .put("/editproduct/:id", tryCatch(controller.editProduct))
+  .get("/orderlist", tryCatch(controller.viewOrder))
 
 module.exports = server;
