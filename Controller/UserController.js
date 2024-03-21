@@ -138,7 +138,7 @@ module.exports = {
     if (!user) {
       return res
         .status(404)
-        .send({ status: "failed", message: "user not found" });
+        .send({ status: "Failed", message: "user not found" });
     }
 
     const { productId } = req.body;
