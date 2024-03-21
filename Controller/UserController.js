@@ -40,7 +40,7 @@ module.exports = {
     });
 
     res.status(200).json({
-      status: "success",
+      status: "Success",
       message: "Registration succefull",
       data: userData,
     });
