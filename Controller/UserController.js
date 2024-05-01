@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const Product = require("./../Model/productSchema");
 const Order = require("./../Model/orderSchema");
-const { alternatives, valid } = require("joi");
+
 
 let sValue = [];
 
@@ -16,18 +16,19 @@ module.exports = {
     const { value, error } = joiUserSchema.validate(req.body);
     const { username, email, phonenumber, password } = value;
     const hashedPassword = await bcrypt.hash(password, 10);
-
+    console.log(value);
     if (error) {
       res.status(400).json({
         status: error,
         message: `invalid user input, check the input`,
       });
     }
-    const existingUser = await User.find({
+    const existingUser = await User.findOne({
       username: username,
     });
+    console.log(existingUser);
     if (existingUser) {
-      res.status(400).send({
+      res.status(400).json({
         status: "error",
         message: "Username already taken",
       });
