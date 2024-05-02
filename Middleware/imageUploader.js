@@ -1,16 +1,17 @@
-const multer = require("multer");
-const fs = require("fs");
-const path = require("path");
+import multer from "multer";
+import fs from "fs";
+import path from "path";
+import { v2 as cloudinary } from "cloudinary";
 
 const storage = multer.diskStorage({
   destination: path.join(__dirname, "upload"),
   filename: (req, file, cb) => {
-    cb(null, Date.now + file.originalname);
+    cb(null, Date.now() + file.originalname);
   },
 });
 
 const upload = multer({ storage });
-const cloudinary = require("cloudinary").v2;
+
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
   api_key: process.env.API_KEY,
@@ -42,4 +43,4 @@ const imageUpload = (req, res, next) => {
   });
 };
 
-module.exports = imageUpload;
+export default imageUpload;

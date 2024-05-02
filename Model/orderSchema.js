@@ -1,5 +1,4 @@
-const { date } = require("joi");
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const orderSchema = mongoose.Schema(
   {
@@ -14,4 +13,4 @@ const orderSchema = mongoose.Schema(
   { strictPopulate: false }
 );
 
-module.exports = mongoose.model("orders", orderSchema);
+export default mongoose.model("orders", orderSchema)

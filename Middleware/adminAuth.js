@@ -1,6 +1,6 @@
-const jwt = require("jsonwebtoken");
+import jwt from "jsonwebtoken";
 
-module.exports = function verifyAdminToken(req, res, next) {
+export default function verifyAdminToken(req, res, next) {
   const token = req.headers["authorization"];
 
   if (!token) {

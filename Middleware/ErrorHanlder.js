@@ -14,4 +14,4 @@ const trycatchMiddleware = (trycatchHandler) => {
   };
 };
 
-module.exports = trycatchMiddleware;
+export default trycatchMiddleware;

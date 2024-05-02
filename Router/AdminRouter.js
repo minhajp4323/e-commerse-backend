@@ -1,15 +1,16 @@
-const express = require("express");
-const verifyToken = require("./../Middleware/adminAuth");
-const server = express();
-const tryCatch = require("./../Middleware/ErrorHanlder");
-const controller = require("./../Controller/AdminController");
 
-const imageUpload = require("../Middleware/imageUploader");
+import express from "express"
+import verifyAdminToken from "./../Middleware/adminAuth";
+import tryCatch from "./../Middleware/ErrorHanlder";
+import controller from "./../Middleware/"
+import imageUpload from "../Middleware/imageUploader";
+const server = express();
+
 
 server.post("/login", tryCatch(controller.login));
 
 server
-  .use(verifyToken)
+  .use(verifyAdminToken)
 
   .get("/user", tryCatch(controller.getAllUser))
   .get("/user/:id", tryCatch(controller.getUserById))

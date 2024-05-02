@@ -1,8 +1,11 @@
-const express = require("express");
-const controller = require("./../Controller/UserController");
-const verifyToken = require("./../Middleware/userAuth");
-const tryCatch = require("./../Middleware/ErrorHanlder");
+
+
+import express from "express"
+import controller from "./../Controller/UserController";
+import verifyToken from "./../Middleware/userAuth";
+import tryCatch from "./../Middleware/ErrorHanlder";
 const server = express.Router();
+
 
 server
   .post("/register", tryCatch(controller.userRegister))

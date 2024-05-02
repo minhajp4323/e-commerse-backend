@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const ProductSchema = mongoose.Schema({
   id: Number,
@@ -9,4 +9,4 @@ const ProductSchema = mongoose.Schema({
   imageUrl: String,
 });
 
-module.exports = mongoose.model("Product", ProductSchema);
+export default mongoose.model("Product", ProductSchema)

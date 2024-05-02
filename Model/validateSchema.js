@@ -1,17 +1,16 @@
-const joi = require("joi");
+import Joi from "joi";
 
-const joiUserSchema = joi.object({
-  username: joi.string(),
-  email: joi.string().email(),
-  phonenumber: joi.number().min(10),
-  password: joi.string().min(1).required(),
+export const joiUserSchema = Joi.object({
+  username: Joi.string(),
+  email: Joi.string().email(),
+  phonenumber: Joi.number().min(10),
+  password: Joi.string().min(1).required(),
 });
-const joiProductSchema = joi.object({
-  id:joi.string(),
-  name: joi.string(),
-  category: joi.string(),
-  price: joi.number(),
-  
-  imageUrl: joi.string(),
+export const joiProductSchema = Joi.object({
+  id: Joi.string(),
+  name: Joi.string(),
+  category: Joi.string(),
+  price: Joi.number(),
+
+  imageUrl: Joi.string(),
 });
-module.exports = { joiUserSchema , joiProductSchema};
