@@ -4,7 +4,7 @@ import path from "path";
 import { v2 as cloudinary } from "cloudinary";
 
 const storage = multer.diskStorage({
-  destination: path.join(__dirname, "upload"),
+  destination: path.join(process.cwd(), "upload"),
   filename: (req, file, cb) => {
     cb(null, Date.now() + file.originalname);
   },

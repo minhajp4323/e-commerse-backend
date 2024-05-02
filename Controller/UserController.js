@@ -1,21 +1,16 @@
 import mongoose from "mongoose";
-import bcrypt from "bcrypt"
-import User from "./../Model/userSchema";
-import { joiUserSchema } from "./../Model/validateSchema";
-
-import jwt from "jsonwebtoken"
+import bcrypt from "bcrypt";
+import User from "../Model/userSchema.js";
+import Product from "./../Model/productSchema.js";
+import Order from "../Model/orderSchema.js";
+import { joiUserSchema } from "./../Model/validateSchema.js";
+//
+import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import stripePackage from "stripe";
-
 // Load environment variables from .env file
 dotenv.config();
-
 const stripe = stripePackage(process.env.STRIPE_SECRET_KEY);
-
-
-
-import Product from "./../Model/productSchema";
-import Order from "./../Model/orderSchema";
 
 let sValue = [];
 
@@ -24,7 +19,7 @@ export const userRegister = async (req, res) => {
   const { value, error } = joiUserSchema.validate(req.body);
   const { username, email, phonenumber, password } = value;
   const hashedPassword = await bcrypt.hash(password, 10);
-  console.log(value);
+  console.log("value:",value);
   if (error) {
     res.status(400).json({
       status: error,
@@ -34,25 +29,32 @@ export const userRegister = async (req, res) => {
   const existingUser = await User.findOne({
     username: username,
   });
-  console.log(existingUser);
+  console.log("Existing User:", existingUser); // Add this line
+
   if (existingUser) {
     res.status(400).json({
       status: "error",
       message: "Username already taken",
     });
+    return; // Make sure to return here to exit the function
   }
-  const userData = await User.create({
+
+  const userData = new User({
     username: username,
     email: email,
     phonenumber: phonenumber,
     password: hashedPassword,
   });
+  await userData.save();
+
+  console.log("New User Data:", userData); // Add this line
 
   res.status(200).json({
     status: "Success",
-    message: "Registration succefull",
+    message: "Registration successful",
     data: userData,
   });
+
   console.log(userData);
 };
 

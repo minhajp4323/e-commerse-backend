@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { mongo } from "mongoose";
 
 const orderSchema = mongoose.Schema(
   {
@@ -13,4 +13,5 @@ const orderSchema = mongoose.Schema(
   { strictPopulate: false }
 );
 
-export default mongoose.model("orders", orderSchema)
+const orderModel= mongoose.model("orders", orderSchema)
+export default orderModel

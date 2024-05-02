@@ -2,8 +2,8 @@ import dotenv from "dotenv";
 dotenv.config();
 import mongoose from "mongoose";
 import express from "express"
-import userRoute from "./Router/UserRouter"
-import adminRouter from "./Router/AdminRouter"
+import userRoute from "./Router/UserRouter.js"
+import adminRouter from "./Router/AdminRouter.js"
 import bodyParser from "body-parser";
 const server = express();
 

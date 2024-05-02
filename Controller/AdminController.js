@@ -1,9 +1,9 @@
-import Users from "./../Model/userSchema";
-import Products from "./../Model/productSchema";
+import Users from "../Model/userSchema.js";
+import Products from "../Model/productSchema.js";
 import jwt from "jsonwebtoken";
-import { joiProductSchema } from "./../Model/validateSchema";
+import { joiProductSchema } from "./../Model/validateSchema.js";
 import mongoose from "mongoose";
-import orderSchema from "./../Model/orderSchema";
+import orderSchema from "../Model/orderSchema.js";
 
 export const login = async (req, res) => {
   const { username, password } = req.body;

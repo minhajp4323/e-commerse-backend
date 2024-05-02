@@ -9,4 +9,5 @@ const ProductSchema = mongoose.Schema({
   imageUrl: String,
 });
 
-export default mongoose.model("Product", ProductSchema)
+const productModel = mongoose.model("Product", ProductSchema)
+export default productModel
