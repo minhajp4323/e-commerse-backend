@@ -159,7 +159,7 @@ export const editProduct = async (req, res) => {
     const updatedProduct = await Products.findById(id);
     return res.status(200).send({
       status: "Success",
-      message: " Successfully updated product",
+      message: " Successfully updated a product",
       data: updatedProduct,
     });
   } else {
