@@ -19,7 +19,7 @@ export const userRegister = async (req, res) => {
   const { value, error } = joiUserSchema.validate(req.body);
   const { username, email, phonenumber, password } = value;
   const hashedPassword = await bcrypt.hash(password, 10);
-  console.log("value:",value);
+  console.log("value:", value);
   if (error) {
     res.status(400).json({
       status: error,

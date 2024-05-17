@@ -1,9 +1,9 @@
 import dotenv from "dotenv";
 dotenv.config();
 import mongoose from "mongoose";
-import express from "express"
-import userRoute from "./Router/UserRouter.js"
-import adminRouter from "./Router/AdminRouter.js"
+import express from "express";
+import userRoute from "./Router/UserRouter.js";
+import adminRouter from "./Router/AdminRouter.js";
 import bodyParser from "body-parser";
 const server = express();
 
@@ -26,7 +26,7 @@ server.use(bodyParser.json());
 server.use(express.json());
 
 server.use("/api/users", userRoute);
-server.use("/api/admin", adminRouter)
+server.use("/api/admin", adminRouter);
 
 server.listen(port, (err) => {
   if (err) {
